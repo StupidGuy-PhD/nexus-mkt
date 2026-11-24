@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NEXUS // Local Buy & Sell</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <div class="bg-glow"></div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="brand">
+        <span class="brand-dot"></span>
+        <span>NEXUS<span class="accent">.MKT</span></span>
+      </div>
+      <div class="nav-actions">
+        <span id="userEmailTag" class="user-tag hidden"></span>
+        <button id="openSellBtn" class="btn btn-primary hidden" onclick="toggleModal('sellModal', true)">+ Sell Item</button>
+        <button id="openAuthBtn" class="btn btn-primary" onclick="toggleModal('authModal', true)">Sign In</button>
+        <button id="logoutBtn" class="btn btn-ghost hidden" onclick="logout()">Log Out</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO & SEARCH -->
+  <header class="hero">
+    <h1>Discover & trade<br><span class="gradient-text">local heat.</span></h1>
+    <p>Buy, sell, and connect with verified members in your area.</p>
+
+    <div class="search-bar">
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="text" id="searchInput" placeholder="Search sneakers, tech, gadgets, fashion..." oninput="renderFilteredListings()" />
+    </div>
+
+    <!-- CATEGORY PILLS -->
+    <div class="pills" id="categoryPills">
+      <button class="pill active" onclick="setCategory('All', this)">All</button>
+      <button class="pill" onclick="setCategory('Electronics', this)">Electronics</button>
+      <button class="pill" onclick="setCategory('Fashion', this)">Fashion</button>
+      <button class="pill" onclick="setCategory('Sneakers', this)">Sneakers</button>
+      <button class="pill" onclick="setCategory('Home', this)">Home</button>
+      <button class="pill" onclick="setCategory('General', this)">General</button>
+    </div>
+  </header>
+
+  <!-- LISTINGS GRID -->
+  <main class="container">
+    <div id="feed" class="grid"></div>
+  </main>
+
+  <!-- AUTH MODAL -->
+  <div id="authModal" class="modal hidden" onclick="closeOnBackdrop(event, 'authModal')">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Welcome to NEXUS</h3>
+        <button class="close-btn" onclick="toggleModal('authModal', false)">✕</button>
+      </div>
+      <p class="muted">Sign in or create an instant account to post items.</p>
+      <input type="email" id="email" placeholder="Email address" />
+      <input type="password" id="password" placeholder="Password (min. 6 characters)" />
+      <div class="modal-actions">
+        <button class="btn btn-primary full" onclick="login()">Log In</button>
+        <button class="btn btn-secondary full" onclick="signup()">Create Account</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SELL ITEM MODAL -->
+  <div id="sellModal" class="modal hidden" onclick="closeOnBackdrop(event, 'sellModal')">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>List an Item</h3>
+        <button class="close-btn" onclick="toggleModal('sellModal', false)">✕</button>
+      </div>
+      <input type="text" id="title" placeholder="Item title (e.g., iPhone 15 Pro Max 256GB)" />
+      <div class="row">
+        <input type="number" id="price" placeholder="Price (₱)" />
+        <select id="category">
+          <option value="Electronics">Electronics</option>
+          <option value="Fashion">Fashion</option>
+          <option value="Sneakers">Sneakers</option>
+          <option value="Home">Home</option>
+          <option value="General">General</option>
+        </select>
+      </div>
+      <textarea id="description" rows="3" placeholder="Condition, meetup spot, or Messenger/Viber handle..."></textarea>
+      <label class="file-upload">
+        <span id="fileNameLabel">📸 Tap to upload product photo</span>
+        <input type="file" id="photo" accept="image/*" onchange="updateFileLabel(this)" />
+      </label>
+      <button id="postBtn" class="btn btn-primary full" onclick="createListing()">Publish Listing</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
