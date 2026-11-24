@@ -1,5 +1,5 @@
 // 🔴 PASTE YOUR SUPABASE CREDENTIALS HERE
-const SUPABASE_URL = 'https://vhleezcqwlhncmewnlzt.supabase.com';
+const SUPABASE_URL = 'https://vhleezcqwlhncmewnlzt.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_VGwe20gaY3FsCcKKq8Zcyw_KGiWTnxJ';
 
 const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
